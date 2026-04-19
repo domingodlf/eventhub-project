@@ -1,1 +1,48 @@
-/* No custom styles have been added yet. Bootstrap is currently being used as the base style framework. */
+/* All custom classes start with "perclas" to easily distinguish personal styles from Bootstrap classes */
+
+.perclas-space-top {
+    margin-top: 135px !important;
+}
+
+.perclas-space-bottom {
+    margin-bottom: 120px !important;
+}
+
+.perclas-footer-space {
+    margin-top: 180px !important;
+}
+
+
+/* Main turquoise brand color */
+.perclas-turquoise-bg {
+    background-color: #2FAFA3 !important;
+    border-color: #2FAFA3 !important;
+}
+
+.perclas-turquoise-text {
+    color: #2FAFA3 !important;
+}
+
+.perclas-turquoise-hover:hover {
+    background-color: #27988e !important;
+    border-color: #27988e !important;
+}
+
+
+/* Contact background */
+.perclas-contact-bg {
+    background-color: #EAF8F7 !important;
+}
+
+
+/* ABOUT section image sizing */
+.perclas-about-image {
+    max-width: 1000px;
+    width: 100%;
+}
+
+
+/* CONTACT section container max width */
+.perclas-contact-box {
+    max-width: 900px;
+}
