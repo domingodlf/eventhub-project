@@ -1,0 +1,79 @@
+<section class="container-fluid px-4 px-lg-5 mt-5">
+
+    <div class="card border-0 shadow-sm rounded-5 mb-5">
+        <div class="card-body p-4 p-lg-5">
+            <p class="text-secondary fw-semibold mb-2">Venue</p>
+
+            <h1 class="fw-bold mb-3">
+                <%= @venue.name %>
+            </h1>
+
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Building</p>
+                    <p class="fw-semibold mb-0"><%= @venue.building %></p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Address</p>
+                    <p class="fw-semibold mb-0"><%= @venue.address %></p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Capacity</p>
+                    <p class="fw-semibold mb-0"><%= @venue.capacity %> people</p>
+                </div>
+            </div>
+
+            <%= link_to "Back to venues", venues_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-2">Events at this venue</h2>
+            <p class="text-secondary mb-0">
+                Browse events hosted at <%= @venue.name %>.
+            </p>
+        </div>
+    </div>
+
+    <% if @venue.events.any? %>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Status</th>
+                        <th>Starts</th>
+                        <th>Ends</th>
+                        <th>Max attendees</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @venue.events.each do |event| %>
+                        <tr>
+                            <td>
+                                <%= link_to event.title, event_path(event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill text-bg-light">
+                                    <%= event.status.humanize %>
+                                </span>
+                            </td>
+                            <td><%= event.start_time.strftime("%B %d, %Y %I:%M %p") if event.start_time %></td>
+                            <td><%= event.end_time.strftime("%B %d, %Y %I:%M %p") if event.end_time %></td>
+                            <td><%= event.max_attendees %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    <% else %>
+        <div class="alert alert-light border rounded-4">
+            There are no events at this venue yet.
+        </div>
+    <% end %>
+
+</section>

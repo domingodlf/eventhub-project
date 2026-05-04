@@ -1,0 +1,90 @@
+<section class="container-fluid px-4 px-lg-5 mt-5">
+
+    <div class="card border-0 shadow-sm rounded-5 mb-5">
+        <div class="card-body p-4 p-lg-5">
+            <p class="text-secondary fw-semibold mb-2">Registration</p>
+
+            <h1 class="fw-bold mb-3">
+                Registration Details
+            </h1>
+
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">User</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to "#{@registration.user.first_name} #{@registration.user.last_name}", user_path(@registration.user), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Event</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @registration.event.title, event_path(@registration.event), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Status</p>
+                    <p class="fw-semibold mb-0">
+                        <span class="badge rounded-pill text-bg-light">
+                            <%= @registration.status.humanize %>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Registered at</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @registration.registered_at.strftime("%B %d, %Y %I:%M %p") if @registration.registered_at %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Waitlist position</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @registration.waitlist_position || "—" %>
+                    </p>
+                </div>
+            </div>
+
+            <%= link_to "Back to registrations", registrations_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-5">
+        <div class="card-body p-4 p-lg-5">
+            <h2 class="fw-bold mb-4">Related event information</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Category</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @registration.event.category.name, category_path(@registration.event.category), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Venue</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @registration.event.venue.name, venue_path(@registration.event.venue), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Starts</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @registration.event.start_time.strftime("%B %d, %Y %I:%M %p") if @registration.event.start_time %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Ends</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @registration.event.end_time.strftime("%B %d, %Y %I:%M %p") if @registration.event.end_time %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

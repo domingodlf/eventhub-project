@@ -56,3 +56,8 @@
 .perclas-contact-box {
   max-width: 900px;
 }
+
+/* Main content spacing for fixed navbar */
+.perclas-main-content {
+  padding-top: 55px;
+}

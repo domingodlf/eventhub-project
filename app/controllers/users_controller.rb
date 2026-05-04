@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = User.includes(:organized_events, :registrations, :reviews)
   end
 
   def show

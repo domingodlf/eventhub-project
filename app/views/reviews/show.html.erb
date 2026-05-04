@@ -1,0 +1,99 @@
+<section class="container-fluid px-4 px-lg-5 mt-5">
+
+    <div class="card border-0 shadow-sm rounded-5 mb-5">
+        <div class="card-body p-4 p-lg-5">
+            <p class="text-secondary fw-semibold mb-2">Review</p>
+
+            <h1 class="fw-bold mb-3">
+                Review Details
+            </h1>
+
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">User</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to "#{@review.user.first_name} #{@review.user.last_name}", user_path(@review.user), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Event</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @review.event.title, event_path(@review.event), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Rating</p>
+                    <p class="fw-semibold mb-0">
+                        <span class="badge rounded-pill text-bg-light">
+                            <%= @review.rating %> / 5
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-8">
+                    <p class="text-secondary mb-1">Comment</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @review.comment %>
+                    </p>
+                </div>
+            </div>
+
+            <%= link_to "Back to reviews", reviews_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-5">
+        <div class="card-body p-4 p-lg-5">
+            <h2 class="fw-bold mb-4">Reviewed event information</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Category</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @review.event.category.name, category_path(@review.event.category), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Venue</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to @review.event.venue.name, venue_path(@review.event.venue), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Organizer</p>
+                    <p class="fw-semibold mb-0">
+                        <%= link_to "#{@review.event.organizer.first_name} #{@review.event.organizer.last_name}", user_path(@review.event.organizer), class: "text-decoration-none perclas-turquoise-text" %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Event status</p>
+                    <p class="fw-semibold mb-0">
+                        <span class="badge rounded-pill text-bg-light">
+                            <%= @review.event.status.humanize %>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Started</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @review.event.start_time.strftime("%B %d, %Y %I:%M %p") if @review.event.start_time %>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <p class="text-secondary mb-1">Ended</p>
+                    <p class="fw-semibold mb-0">
+                        <%= @review.event.end_time.strftime("%B %d, %Y %I:%M %p") if @review.event.end_time %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
