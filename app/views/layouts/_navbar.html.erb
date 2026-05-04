@@ -1,20 +1,26 @@
-<nav class="navbar navbar-expand-lg bg-white border-bottom mb-4">
+<nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top py-3">
   <div class="container-fluid px-4 px-lg-5">
-    <%= link_to "EventHub", root_path, class: "navbar-brand fw-bold fs-3 text-success" %>
+      
+    <!-- Brand -->
+    <%= link_to "EventHub", root_path, class: "navbar-brand fw-bold fs-3 perclas-turquoise-text" %>
 
+    <!-- Toggler -->
     <button
       class="navbar-toggler border-0 shadow-none"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#eventhubNavbar"
-      aria-controls="eventhubNavbar"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="eventhubNavbar">
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="mainNavbar">
+
+      <!-- Search bar desktop -->
       <form class="d-none d-lg-flex align-items-center border rounded-pill px-2 py-1 mx-lg-4" role="search">
         <input
           class="form-control border-0 shadow-none"
@@ -32,24 +38,26 @@
           aria-label="Location"
         >
 
-        <button class="btn btn-success rounded-pill ms-2 px-3" type="button">
+        <button class="btn rounded-circle ms-2 px-3 perclas-turquoise-bg perclas-turquoise-hover text-white" type="button">
           Search
         </button>
       </form>
 
+      <!-- Links -->
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
         <li class="nav-item">
           <%= link_to "Find Events", events_path, class: "nav-link fw-semibold" %>
         </li>
 
         <li class="nav-item">
-          <%= link_to "Categories", categories_path, class: "nav-link fw-semibold" %>
+          <a class="nav-link fw-semibold" href="#">Create Event</a>
         </li>
 
         <li class="nav-item">
-          <%= link_to "Venues", venues_path, class: "nav-link fw-semibold" %>
+          <a class="nav-link fw-semibold" href="#contact">Contact</a>
         </li>
 
+        <!-- Dropdown -->
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle fw-semibold"
@@ -63,6 +71,12 @@
 
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
+              <%= link_to "Categories", categories_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to "Venues", venues_path, class: "dropdown-item" %>
+            </li>
+            <li>
               <%= link_to "Users", users_path, class: "dropdown-item" %>
             </li>
             <li>
@@ -75,6 +89,7 @@
         </li>
       </ul>
 
+      <!-- Search mobile -->
       <form class="d-lg-none mt-3" role="search">
         <input
           class="form-control mb-2"
@@ -90,7 +105,7 @@
           aria-label="Location"
         >
 
-        <button class="btn btn-success w-100" type="button">
+        <button class="btn w-100 text-white perclas-turquoise-bg perclas-turquoise-hover" type="button">
           Search
         </button>
       </form>
