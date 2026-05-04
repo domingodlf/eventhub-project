@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom mb-4">
+  <div class="container-fluid px-4 px-lg-5">
+    <%= link_to "EventHub", root_path, class: "navbar-brand fw-bold fs-3 text-success" %>
+
+    <button
+      class="navbar-toggler border-0 shadow-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#eventhubNavbar"
+      aria-controls="eventhubNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="eventhubNavbar">
+      <form class="d-none d-lg-flex align-items-center border rounded-pill px-2 py-1 mx-lg-4" role="search">
+        <input
+          class="form-control border-0 shadow-none"
+          type="search"
+          placeholder="Search events..."
+          aria-label="Search events"
+        >
+
+        <span class="text-secondary px-2">|</span>
+
+        <input
+          class="form-control border-0 shadow-none"
+          type="search"
+          placeholder="Location"
+          aria-label="Location"
+        >
+
+        <button class="btn btn-success rounded-pill ms-2 px-3" type="button">
+          Search
+        </button>
+      </form>
+
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+        <li class="nav-item">
+          <%= link_to "Find Events", events_path, class: "nav-link fw-semibold" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Categories", categories_path, class: "nav-link fw-semibold" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Venues", venues_path, class: "nav-link fw-semibold" %>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle fw-semibold"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            More
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <%= link_to "Users", users_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to "Registrations", registrations_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to "Reviews", reviews_path, class: "dropdown-item" %>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <form class="d-lg-none mt-3" role="search">
+        <input
+          class="form-control mb-2"
+          type="search"
+          placeholder="Search events..."
+          aria-label="Search events"
+        >
+
+        <input
+          class="form-control mb-2"
+          type="search"
+          placeholder="Location"
+          aria-label="Location"
+        >
+
+        <button class="btn btn-success w-100" type="button">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
