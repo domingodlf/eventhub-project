@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  has_rich_text :description
+
   belongs_to :organizer, class_name: "User"
   belongs_to :category
   belongs_to :venue
