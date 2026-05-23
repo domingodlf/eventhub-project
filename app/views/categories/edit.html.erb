@@ -1,0 +1,13 @@
+<section class="container-fluid px-4 px-lg-5 mt-5">
+    <div class="card border-0 shadow-sm rounded-5">
+        <div class="card-body p-4 p-lg-5">
+            <p class="text-secondary fw-semibold mb-2">Edit category</p>
+
+            <h1 class="fw-bold mb-4">
+                Edit <%= @category.name %>
+            </h1>
+
+            <%= render "form", category: @category %>
+        </div>
+    </div>
+</section>
