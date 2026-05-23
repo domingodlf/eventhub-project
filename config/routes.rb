@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
   resources :events, only: [:index, :show]
   resources :categories
-  resources :venues, only: [:index, :show]
+  resources :venues
   resources :registrations, only: [:index, :show]
   resources :reviews, only: [:index, :show]
 
