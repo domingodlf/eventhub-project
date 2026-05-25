@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
   resources :categories
   resources :venues
-  resources :registrations, only: [:index, :show]
+  resources :registrations, only: [:index, :show, :create]
   resources :reviews, only: [:index, :show]
 
   root "home#index"

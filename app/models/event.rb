@@ -31,6 +31,27 @@ class Event < ApplicationRecord
   scope :upcoming, -> { where("start_time > ?", Time.current).order(start_time: :asc) }
   scope :past, -> { where("end_time < ?", Time.current).order(end_time: :desc) }
 
+
+  def confirmed_registrations_count
+    registrations.confirmed.count
+  end
+
+  def waitlisted_registrations_count
+    registrations.waitlisted.count
+  end
+
+  def available_spots
+    [max_attendees - confirmed_registrations_count, 0].max
+  end
+
+  def full?
+    available_spots.zero?
+  end
+
+  def next_waitlist_position
+    waitlisted_registrations_count + 1
+  end
+
   private
 
   def end_time_after_start_time

@@ -7,6 +7,10 @@ class EventsController < ApplicationController
   end
 
   def show
+    @registration = Registration.new
+    @users = User.all
+    @registrations = @event.registrations.includes(:user).order(:registered_at)
+    @reviews = @event.reviews.includes(:user)
   end
 
   def new

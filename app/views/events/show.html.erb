@@ -63,8 +63,18 @@
                 </div>
 
                 <div class="col-12 col-md-4">
-                    <p class="text-secondary mb-1">Registrations</p>
-                    <p class="fw-semibold mb-0"><%= @event.registrations.count %></p>
+                    <p class="text-secondary mb-1">Confirmed registrations</p>
+                    <p class="fw-semibold mb-0"><%= @event.confirmed_registrations_count %></p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Available spots</p>
+                    <p class="fw-semibold mb-0"><%= @event.available_spots %></p>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <p class="text-secondary mb-1">Waitlisted</p>
+                    <p class="fw-semibold mb-0"><%= @event.waitlisted_registrations_count %></p>
                 </div>
 
                 <div class="col-12 col-md-4">
@@ -105,7 +115,39 @@
             </div>
         </div>
 
-        <% if @event.registrations.any? %>
+        <% if @event.published? %>
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-2">Register for this event</h5>
+
+                    <p class="text-secondary mb-3">
+                        Select a user to register. If there are no available spots, the user will be added to the waitlist.
+                    </p>
+
+                    <%= form_with model: @registration, url: registrations_path, class: "row g-3 align-items-end" do |form| %>
+                        <%= form.hidden_field :event_id, value: @event.id %>
+
+                        <div class="col-12 col-md-8">
+                            <%= form.label :user_id, "User", class: "form-label fw-semibold" %>
+                            <%= form.select :user_id,
+                                @users.map { |user| ["#{user.first_name} #{user.last_name} (#{user.email})", user.id] },
+                                { prompt: "Select a user" },
+                                { class: "form-select", required: true } %>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <%= form.submit "Register", class: "btn w-100 rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        <% else %>
+            <div class="alert alert-light border rounded-4 mb-4">
+                Registration is available only for published events.
+            </div>
+        <% end %>
+
+        <% if @registrations.any? %>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -118,7 +160,7 @@
                     </thead>
 
                     <tbody>
-                        <% @event.registrations.each do |registration| %>
+                        <% @registrations.each do |registration| %>
                             <tr>
                                 <td>
                                     <%= link_to "#{registration.user.first_name} #{registration.user.last_name}", user_path(registration.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
@@ -152,7 +194,7 @@
             </div>
         </div>
 
-        <% if @event.reviews.any? %>
+        <% if @reviews.any? %>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -164,7 +206,7 @@
                     </thead>
 
                     <tbody>
-                        <% @event.reviews.each do |review| %>
+                        <% @reviews.each do |review| %>
                             <tr>
                                 <td>
                                     <%= link_to "#{review.user.first_name} #{review.user.last_name}", user_path(review.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
