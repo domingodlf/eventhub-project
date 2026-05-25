@@ -50,6 +50,11 @@ class RegistrationsController < ApplicationController
       return
     end
 
+    unless @event.published?
+      redirect_to @event, alert: "Registrations can only be cancelled while the event is published."
+      return
+    end
+
     was_confirmed = @registration.confirmed?
 
     ActiveRecord::Base.transaction do
