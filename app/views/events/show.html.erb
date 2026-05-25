@@ -156,6 +156,7 @@
                             <th>Status</th>
                             <th>Registered at</th>
                             <th>Waitlist position</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -172,6 +173,16 @@
                                 </td>
                                 <td><%= registration.registered_at.strftime("%B %d, %Y %I:%M %p") if registration.registered_at %></td>
                                 <td><%= registration.waitlist_position || "—" %></td>
+                                <td>
+                                    <% if registration.cancelled? %>
+                                        <span class="text-secondary">—</span>
+                                    <% else %>
+                                        <%= button_to "Cancel registration", cancel_registration_path(registration),
+                                            method: :patch,
+                                            data: { turbo_confirm: "Are you sure you want to cancel this registration?" },
+                                            class: "btn btn-outline-danger btn-sm rounded-pill px-3" %>
+                                    <% end %>
+                                </td>
                             </tr>
                         <% end %>
                     </tbody>

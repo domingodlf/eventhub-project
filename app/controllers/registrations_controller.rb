@@ -41,6 +41,28 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def cancel
+    @registration = Registration.find(params[:id])
+    @event = @registration.event
+
+    if @registration.cancelled?
+      redirect_to @event, alert: "This registration is already cancelled."
+      return
+    end
+
+    was_confirmed = @registration.confirmed?
+
+    ActiveRecord::Base.transaction do
+      @registration.update!(status: "cancelled", waitlist_position: nil)
+      @event.promote_next_waitlisted_registration if was_confirmed
+    end
+
+    redirect_to @event, notice: "Registration was successfully cancelled."
+  rescue ActiveRecord::RecordInvalid => error
+    redirect_to @event, alert: error.record.errors.full_messages.to_sentence
+  end
+  
+
   private
 
   def registration_params

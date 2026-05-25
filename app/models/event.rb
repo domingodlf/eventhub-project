@@ -49,9 +49,18 @@ class Event < ApplicationRecord
   end
 
   def next_waitlist_position
-    waitlisted_registrations_count + 1
+    registrations.waitlisted.maximum(:waitlist_position).to_i + 1
   end
 
+  def promote_next_waitlisted_registration
+    next_waitlisted_registration = registrations.waitlisted.order(:waitlist_position, :registered_at).first
+
+    return if next_waitlisted_registration.blank?
+
+    next_waitlisted_registration.update(status: "confirmed", waitlist_position: nil)
+  end
+
+  
   private
 
   def end_time_after_start_time
