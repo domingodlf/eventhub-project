@@ -78,6 +78,13 @@
 
                 <%= link_to "Edit Event", edit_event_path(@event), class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
 
+                <% if @event.draft? %>
+                    <%= button_to "Publish Event", publish_event_path(@event),
+                        method: :patch,
+                        data: { turbo_confirm: "Are you sure you want to publish this event?" },
+                        class: "btn btn-outline-success rounded-pill px-4" %>
+                <% end %>
+
                 <% if @event.draft? || @event.published? %>
                     <%= button_to "Cancel Event", event_path(@event),
                         method: :delete,

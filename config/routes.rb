@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :users, only: [:index, :show]
-  resources :events
+  resources :events do
+    member do
+      patch :publish
+    end
+  end
   resources :categories
   resources :venues
   resources :registrations, only: [:index, :show]
