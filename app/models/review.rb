@@ -9,6 +9,7 @@ class Review < ApplicationRecord
   validates :user_id, uniqueness: { scope: :event_id }
 
   validate :event_must_be_completed
+  validate :user_must_have_confirmed_registration
 
   private
 
@@ -17,6 +18,14 @@ class Review < ApplicationRecord
 
     unless event.completed?
       errors.add(:event, "must be completed before it can be reviewed")
+    end
+  end
+
+  def user_must_have_confirmed_registration
+    return if user.blank? || event.blank?
+
+    unless Registration.confirmed.exists?(user: user, event: event)
+      errors.add(:user, "must have a confirmed registration for this event")
     end
   end
 end

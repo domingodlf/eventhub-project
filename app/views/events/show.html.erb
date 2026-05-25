@@ -205,6 +205,57 @@
             </div>
         </div>
 
+        <% if @event.completed? %>
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-2">Write a review</h5>
+
+                    <p class="text-secondary mb-3">
+                        Select a user who attended this completed event and write a review.
+                    </p>
+
+                    <%= form_with model: @review, url: reviews_path, class: "row g-3" do |form| %>
+                        <%= form.hidden_field :event_id, value: @event.id %>
+
+                        <div class="col-12 col-md-6">
+                            <%= form.label :user_id, "User", class: "form-label fw-semibold" %>
+                            <%= form.select :user_id,
+                                @users.map { |user| ["#{user.first_name} #{user.last_name} (#{user.email})", user.id] },
+                                { prompt: "Select a user" },
+                                { class: "form-select", required: true } %>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <%= form.label :rating, "Rating", class: "form-label fw-semibold" %>
+                            <%= form.number_field :rating,
+                                class: "form-control",
+                                min: 1,
+                                max: 5,
+                                required: true,
+                                placeholder: "Rate from 1 to 5" %>
+                        </div>
+
+                        <div class="col-12">
+                            <%= form.label :comment, "Comment", class: "form-label fw-semibold" %>
+                            <%= form.text_area :comment,
+                                class: "form-control",
+                                rows: 4,
+                                required: true,
+                                placeholder: "Write your review" %>
+                        </div>
+
+                        <div class="col-12">
+                            <%= form.submit "Submit review", class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        <% else %>
+            <div class="alert alert-light border rounded-4 mb-4">
+                Reviews are available only for completed events.
+            </div>
+        <% end %>
+
         <% if @reviews.any? %>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">

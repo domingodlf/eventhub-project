@@ -8,9 +8,10 @@ class EventsController < ApplicationController
 
   def show
     @registration = Registration.new
+    @review = Review.new
     @users = User.all
     @registrations = @event.registrations.includes(:user).order(:registered_at)
-    @reviews = @event.reviews.includes(:user)
+    @reviews = @event.reviews.includes(:user).order(created_at: :desc)
   end
 
   def new
