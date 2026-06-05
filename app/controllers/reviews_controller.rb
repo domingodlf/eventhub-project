@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
+
   def index
     @reviews = Review.includes(:user, :event)
   end
@@ -9,18 +11,16 @@ class ReviewsController < ApplicationController
 
   def create
     @event = Event.find(review_params[:event_id])
-    @user = User.find_by(id: review_params[:user_id])
 
-    if @user.blank?
-      redirect_to @event, alert: "Please select a user."
-    elsif !@event.completed?
+    if !@event.completed?
       redirect_to @event, alert: "Reviews can only be added to completed events."
-    elsif !Registration.confirmed.exists?(user: @user, event: @event)
+    elsif !Registration.confirmed.exists?(user: current_user, event: @event)
       redirect_to @event, alert: "Only users with a confirmed registration can review this event."
-    elsif Review.exists?(user: @user, event: @event)
-      redirect_to @event, alert: "This user has already reviewed this event."
+    elsif Review.exists?(user: current_user, event: @event)
+      redirect_to @event, alert: "You have already reviewed this event."
     else
       @review = Review.new(review_params)
+      @review.user = current_user
 
       if @review.save
         redirect_to @event, notice: "Review was successfully created."
@@ -30,10 +30,9 @@ class ReviewsController < ApplicationController
     end
   end
 
-  
   private
 
   def review_params
-    params.require(:review).permit(:user_id, :event_id, :rating, :comment)
+    params.require(:review).permit(:event_id, :rating, :comment)
   end
 end
