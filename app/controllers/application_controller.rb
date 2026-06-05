@@ -7,7 +7,10 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  
+  rescue_from CanCan::AccessDenied do
+    redirect_to root_path, alert: "You are not authorized to perform this action."
+  end
+
   private
 
   def configure_permitted_parameters

@@ -13,6 +13,7 @@ class Ability
       can :manage, :all
     else
       can :read, Event, status: "published"
+      can :read, Event, organizer_id: user.id
       can :read, Category
       can :read, Venue
       can :read, Review

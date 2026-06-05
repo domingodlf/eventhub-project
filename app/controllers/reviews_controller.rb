@@ -2,11 +2,13 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def index
+    authorize! :read, Review
     @reviews = Review.includes(:user, :event)
   end
 
   def show
     @review = Review.find(params[:id])
+    authorize! :read, @review
   end
 
   def create
@@ -21,6 +23,8 @@ class ReviewsController < ApplicationController
     else
       @review = Review.new(review_params)
       @review.user = current_user
+
+      authorize! :create, @review
 
       if @review.save
         redirect_to @event, notice: "Review was successfully created."

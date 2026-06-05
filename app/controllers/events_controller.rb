@@ -1,13 +1,15 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :publish]
   before_action :set_event, only: [:show, :edit, :update, :destroy, :publish]
   before_action :load_form_collections, only: [:new, :edit, :create, :update]
 
   def index
-    @events = Event.includes(:organizer, :category, :venue)
+    @events = Event.accessible_by(current_ability).includes(:organizer, :category, :venue)
   end
 
   def show
+    authorize! :read, @event
+
     @registration = Registration.new
     @review = Review.new
     @users = User.all
@@ -17,12 +19,15 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    authorize! :create, @event
   end
 
   def create
     @event = Event.new(event_params)
     @event.organizer = current_user
     @event.status = "draft"
+
+    authorize! :create, @event
 
     if @event.save
       redirect_to @event, notice: "Event was successfully created as a draft."
@@ -32,9 +37,12 @@ class EventsController < ApplicationController
   end
 
   def edit
+    authorize! :update, @event
   end
 
   def update
+    authorize! :update, @event
+
     if @event.update(event_params)
       redirect_to @event, notice: "Event was successfully updated."
     else
@@ -43,6 +51,8 @@ class EventsController < ApplicationController
   end
 
   def publish
+    authorize! :publish, @event
+
     if @event.draft?
       @event.update(status: "published")
       redirect_to @event, notice: "Event was successfully published."
@@ -52,6 +62,8 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @event
+
     if @event.draft? || @event.published?
       @event.update(status: "cancelled")
       redirect_to @event, notice: "Event was successfully cancelled."

@@ -2,11 +2,13 @@ class RegistrationsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :cancel]
 
   def index
-    @registrations = Registration.includes(:user, :event)
+    authorize! :read, Registration
+    @registrations = Registration.accessible_by(current_ability).includes(:user, :event)
   end
 
   def show
     @registration = Registration.find(params[:id])
+    authorize! :read, @registration
   end
 
   def create
@@ -23,6 +25,8 @@ class RegistrationsController < ApplicationController
         event: @event,
         registered_at: Time.current
       )
+
+      authorize! :create, @registration
 
       if @event.full?
         @registration.status = "waitlisted"
@@ -45,10 +49,7 @@ class RegistrationsController < ApplicationController
     @registration = Registration.find(params[:id])
     @event = @registration.event
 
-    unless @registration.user == current_user
-      redirect_to @event, alert: "You can only cancel your own registration."
-      return
-    end
+    authorize! :cancel, @registration
 
     if @registration.cancelled?
       redirect_to @event, alert: "This registration is already cancelled."

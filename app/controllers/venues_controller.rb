@@ -2,18 +2,22 @@ class VenuesController < ApplicationController
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize! :read, Venue
     @venues = Venue.includes(:events)
   end
 
   def show
+    authorize! :read, @venue
   end
 
   def new
     @venue = Venue.new
+    authorize! :create, @venue
   end
 
   def create
     @venue = Venue.new(venue_params)
+    authorize! :create, @venue
 
     if @venue.save
       redirect_to @venue, notice: "Venue was successfully created."
@@ -23,9 +27,12 @@ class VenuesController < ApplicationController
   end
 
   def edit
+    authorize! :update, @venue
   end
 
   def update
+    authorize! :update, @venue
+
     if @venue.update(venue_params)
       redirect_to @venue, notice: "Venue was successfully updated."
     else
@@ -34,6 +41,8 @@ class VenuesController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @venue
+
     @venue.destroy
     redirect_to venues_path, notice: "Venue was successfully deleted."
   end
