@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   has_many :organized_events, class_name: "Event", foreign_key: "organizer_id"
   has_many :registrations
   has_many :reviews
@@ -13,6 +14,7 @@ class User < ApplicationRecord
   }
 
   before_validation :normalize_email
+  before_validation :set_default_role, on: :create
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -23,5 +25,9 @@ class User < ApplicationRecord
 
   def normalize_email
     self.email = email.strip.downcase if email.present?
+  end
+
+  def set_default_role
+    self.role = "regular" if role.blank?
   end
 end
