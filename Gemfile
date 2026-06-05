@@ -20,6 +20,8 @@ gem "jbuilder"
 gem "fiddle"
 # Authentication with Devise for user sign up, login, logout, password recovery, and account editing
 gem "devise"
+# Authorization with CanCanCan for role-based permissions
+gem "cancancan"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
