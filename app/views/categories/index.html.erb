@@ -8,7 +8,9 @@
             </p>
         </div>
 
-        <%= link_to "New Category", new_category_path, class: "btn rounded-pill px-4 mt-3 mt-md-0 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+        <% if can?(:create, Category) %>
+            <%= link_to "New Category", new_category_path, class: "btn rounded-pill px-4 mt-3 mt-md-0 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+        <% end %>
     </div>
 
     <div class="row g-4">

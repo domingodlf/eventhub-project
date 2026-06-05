@@ -20,7 +20,9 @@
                 </div>
             </div>
 
-            <%= link_to "Back to users", users_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+            <% if can?(:index, User) %>
+                <%= link_to "Back to users", users_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+            <% end %>
         </div>
     </div>
 

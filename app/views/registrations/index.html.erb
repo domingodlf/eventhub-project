@@ -26,7 +26,11 @@
                 <% @registrations.each do |registration| %>
                     <tr>
                         <td>
-                            <%= link_to "#{registration.user.first_name} #{registration.user.last_name}", user_path(registration.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                            <% if can?(:read, registration.user) %>
+                                <%= link_to "#{registration.user.first_name} #{registration.user.last_name}", user_path(registration.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                            <% else %>
+                                <span class="fw-semibold perclas-turquoise-text"><%= registration.user.first_name %> <%= registration.user.last_name %></span>
+                            <% end %>
                         </td>
                         <td>
                             <%= link_to registration.event.title, event_path(registration.event), class: "text-decoration-none perclas-turquoise-text" %>

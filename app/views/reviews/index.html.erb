@@ -25,7 +25,11 @@
                 <% @reviews.each do |review| %>
                     <tr>
                         <td>
-                            <%= link_to "#{review.user.first_name} #{review.user.last_name}", user_path(review.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                            <% if can?(:read, review.user) %>
+                                <%= link_to "#{review.user.first_name} #{review.user.last_name}", user_path(review.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                            <% else %>
+                                <span class="fw-semibold perclas-turquoise-text"><%= review.user.first_name %> <%= review.user.last_name %></span>
+                            <% end %>
                         </td>
                         <td>
                             <%= link_to review.event.title, event_path(review.event), class: "text-decoration-none perclas-turquoise-text" %>

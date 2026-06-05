@@ -12,7 +12,11 @@
                 <div class="col-12 col-md-6">
                     <p class="text-secondary mb-1">User</p>
                     <p class="fw-semibold mb-0">
-                        <%= link_to "#{@review.user.first_name} #{@review.user.last_name}", user_path(@review.user), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% if can?(:read, @review.user) %>
+                            <%= link_to "#{@review.user.first_name} #{@review.user.last_name}", user_path(@review.user), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% else %>
+                            <span class="perclas-turquoise-text"><%= @review.user.first_name %> <%= @review.user.last_name %></span>
+                        <% end %>
                     </p>
                 </div>
 
@@ -66,7 +70,11 @@
                 <div class="col-12 col-md-6">
                     <p class="text-secondary mb-1">Organizer</p>
                     <p class="fw-semibold mb-0">
-                        <%= link_to "#{@review.event.organizer.first_name} #{@review.event.organizer.last_name}", user_path(@review.event.organizer), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% if can?(:read, @review.event.organizer) %>
+                            <%= link_to "#{@review.event.organizer.first_name} #{@review.event.organizer.last_name}", user_path(@review.event.organizer), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% else %>
+                            <span class="perclas-turquoise-text"><%= @review.event.organizer.first_name %> <%= @review.event.organizer.last_name %></span>
+                        <% end %>
                     </p>
                 </div>
 

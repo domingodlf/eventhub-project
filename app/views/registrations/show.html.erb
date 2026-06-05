@@ -12,7 +12,11 @@
                 <div class="col-12 col-md-6">
                     <p class="text-secondary mb-1">User</p>
                     <p class="fw-semibold mb-0">
-                        <%= link_to "#{@registration.user.first_name} #{@registration.user.last_name}", user_path(@registration.user), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% if can?(:read, @registration.user) %>
+                            <%= link_to "#{@registration.user.first_name} #{@registration.user.last_name}", user_path(@registration.user), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% else %>
+                            <span class="perclas-turquoise-text"><%= @registration.user.first_name %> <%= @registration.user.last_name %></span>
+                        <% end %>
                     </p>
                 </div>
 

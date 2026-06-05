@@ -30,7 +30,11 @@
                 <div class="col-12 col-md-4">
                     <p class="text-secondary mb-1">Organizer</p>
                     <p class="fw-semibold mb-0">
-                        <%= link_to "#{@event.organizer.first_name} #{@event.organizer.last_name}", user_path(@event.organizer), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% if can?(:read, @event.organizer) %>
+                            <%= link_to "#{@event.organizer.first_name} #{@event.organizer.last_name}", user_path(@event.organizer), class: "text-decoration-none perclas-turquoise-text" %>
+                        <% else %>
+                            <span class="perclas-turquoise-text"><%= @event.organizer.first_name %> <%= @event.organizer.last_name %></span>
+                        <% end %>
                     </p>
                 </div>
 
@@ -86,16 +90,18 @@
             <div class="d-flex flex-wrap gap-2">
                 <%= link_to "Back to events", events_path, class: "btn btn-outline-secondary rounded-pill px-4" %>
 
-                <%= link_to "Edit Event", edit_event_path(@event), class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+                <% if can?(:update, @event) %>
+                    <%= link_to "Edit Event", edit_event_path(@event), class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+                <% end %>
 
-                <% if @event.draft? %>
+                <% if can?(:publish, @event) && @event.draft? %>
                     <%= button_to "Publish Event", publish_event_path(@event),
                         method: :patch,
                         data: { turbo_confirm: "Are you sure you want to publish this event?" },
                         class: "btn btn-outline-success rounded-pill px-4" %>
                 <% end %>
 
-                <% if @event.draft? || @event.published? %>
+                <% if can?(:destroy, @event) && (@event.draft? || @event.published?) %>
                     <%= button_to "Cancel Event", event_path(@event),
                         method: :delete,
                         data: { turbo_confirm: "Are you sure you want to cancel this event?" },
@@ -172,7 +178,11 @@
                         <% @registrations.each do |registration| %>
                             <tr>
                                 <td>
-                                    <%= link_to "#{registration.user.first_name} #{registration.user.last_name}", user_path(registration.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% if can?(:read, registration.user) %>
+                                        <%= link_to "#{registration.user.first_name} #{registration.user.last_name}", user_path(registration.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% else %>
+                                        <span class="fw-semibold perclas-turquoise-text"><%= registration.user.first_name %> <%= registration.user.last_name %></span>
+                                    <% end %>
                                 </td>
                                 <td>
                                     <span class="badge rounded-pill text-bg-light">
@@ -182,7 +192,7 @@
                                 <td><%= registration.registered_at.strftime("%B %d, %Y %I:%M %p") if registration.registered_at %></td>
                                 <td><%= registration.waitlist_position || "—" %></td>
                                 <td>
-                                    <% if user_signed_in? && registration.user == current_user && @event.published? && !registration.cancelled? %>
+                                    <% if can?(:cancel, registration) && @event.published? && !registration.cancelled? %>
                                         <%= button_to "Cancel registration", cancel_registration_path(registration),
                                             method: :patch,
                                             data: { turbo_confirm: "Are you sure you want to cancel this registration?" },
@@ -287,7 +297,11 @@
                         <% @reviews.each do |review| %>
                             <tr>
                                 <td>
-                                    <%= link_to "#{review.user.first_name} #{review.user.last_name}", user_path(review.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% if can?(:read, review.user) %>
+                                        <%= link_to "#{review.user.first_name} #{review.user.last_name}", user_path(review.user), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% else %>
+                                        <span class="fw-semibold perclas-turquoise-text"><%= review.user.first_name %> <%= review.user.last_name %></span>
+                                    <% end %>
                                 </td>
                                 <td><%= review.rating %> / 5</td>
                                 <td><%= review.comment %></td>
