@@ -120,24 +120,32 @@
                 <div class="card-body p-4">
                     <h5 class="fw-bold mb-2">Register for this event</h5>
 
-                    <p class="text-secondary mb-3">
-                        Select a user to register. If there are no available spots, the user will be added to the waitlist.
-                    </p>
+                    <% if user_signed_in? %>
+                        <p class="text-secondary mb-3">
+                            Register with your EventHub account. If there are no available spots, you will be added to the waitlist.
+                        </p>
 
-                    <%= form_with model: @registration, url: registrations_path, class: "row g-3 align-items-end" do |form| %>
-                        <%= form.hidden_field :event_id, value: @event.id %>
+                        <%= form_with model: @registration, url: registrations_path, class: "row g-3 align-items-end" do |form| %>
+                            <%= form.hidden_field :event_id, value: @event.id %>
 
-                        <div class="col-12 col-md-8">
-                            <%= form.label :user_id, "User", class: "form-label fw-semibold" %>
-                            <%= form.select :user_id,
-                                @users.map { |user| ["#{user.first_name} #{user.last_name} (#{user.email})", user.id] },
-                                { prompt: "Select a user" },
-                                { class: "form-select", required: true } %>
-                        </div>
+                            <div class="col-12 col-md-8">
+                                <p class="mb-0">
+                                    You are registering as
+                                    <span class="fw-semibold"><%= current_user.first_name %> <%= current_user.last_name %></span>.
+                                </p>
+                                <p class="text-secondary mb-0"><%= current_user.email %></p>
+                            </div>
 
-                        <div class="col-12 col-md-4">
-                            <%= form.submit "Register", class: "btn w-100 rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
-                        </div>
+                            <div class="col-12 col-md-4">
+                                <%= form.submit "Register", class: "btn w-100 rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
+                            </div>
+                        <% end %>
+                    <% else %>
+                        <p class="text-secondary mb-3">
+                            You need to log in before registering for this event.
+                        </p>
+
+                        <%= link_to "Log in to register", new_user_session_path, class: "btn rounded-pill px-4 text-white perclas-turquoise-bg perclas-turquoise-hover" %>
                     <% end %>
                 </div>
             </div>
@@ -174,7 +182,7 @@
                                 <td><%= registration.registered_at.strftime("%B %d, %Y %I:%M %p") if registration.registered_at %></td>
                                 <td><%= registration.waitlist_position || "—" %></td>
                                 <td>
-                                    <% if @event.published? && !registration.cancelled? %>
+                                    <% if user_signed_in? && registration.user == current_user && @event.published? && !registration.cancelled? %>
                                         <%= button_to "Cancel registration", cancel_registration_path(registration),
                                             method: :patch,
                                             data: { turbo_confirm: "Are you sure you want to cancel this registration?" },

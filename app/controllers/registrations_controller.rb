@@ -1,4 +1,6 @@
 class RegistrationsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :cancel]
+
   def index
     @registrations = Registration.includes(:user, :event)
   end
@@ -9,14 +11,12 @@ class RegistrationsController < ApplicationController
 
   def create
     @event = Event.find(registration_params[:event_id])
-    @user = User.find_by(id: registration_params[:user_id])
+    @user = current_user
 
-    if @user.blank?
-      redirect_to @event, alert: "Please select a user."
-    elsif !@event.published?
+    if !@event.published?
       redirect_to @event, alert: "Users can only register for published events."
     elsif Registration.exists?(user: @user, event: @event)
-      redirect_to @event, alert: "This user is already registered for this event."
+      redirect_to @event, alert: "You are already registered for this event."
     else
       @registration = Registration.new(
         user: @user,
@@ -45,6 +45,11 @@ class RegistrationsController < ApplicationController
     @registration = Registration.find(params[:id])
     @event = @registration.event
 
+    unless @registration.user == current_user
+      redirect_to @event, alert: "You can only cancel your own registration."
+      return
+    end
+
     if @registration.cancelled?
       redirect_to @event, alert: "This registration is already cancelled."
       return
@@ -66,11 +71,10 @@ class RegistrationsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => error
     redirect_to @event, alert: error.record.errors.full_messages.to_sentence
   end
-  
 
   private
 
   def registration_params
-    params.require(:registration).permit(:user_id, :event_id)
+    params.require(:registration).permit(:event_id)
   end
 end
