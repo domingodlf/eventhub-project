@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
   before_action :set_event, only: [:show, :edit, :update, :destroy, :publish]
   before_action :load_form_collections, only: [:new, :edit, :create, :update]
 
@@ -20,6 +21,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
+    @event.organizer = current_user
     @event.status = "draft"
 
     if @event.save
@@ -58,7 +60,6 @@ class EventsController < ApplicationController
     end
   end
 
-  
   private
 
   def set_event
@@ -66,12 +67,11 @@ class EventsController < ApplicationController
   end
 
   def load_form_collections
-    @users = User.all
     @categories = Category.all
     @venues = Venue.all
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :organizer_id, :category_id, :venue_id, :start_time, :end_time, :max_attendees)
+    params.require(:event).permit(:title, :description, :category_id, :venue_id, :start_time, :end_time, :max_attendees)
   end
 end

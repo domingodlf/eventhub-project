@@ -19,17 +19,12 @@
     </div>
 
     <div class="row g-3">
-        <div class="col-12 col-md-4">
-            <%= form.label :organizer_id, "Organizer", class: "form-label fw-semibold" %>
-            <%= form.collection_select :organizer_id, @users, :id, :email, { prompt: "Select an organizer" }, { class: "form-select", required: true } %>
-        </div>
-
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <%= form.label :category_id, "Category", class: "form-label fw-semibold" %>
             <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Select a category" }, { class: "form-select", required: true } %>
         </div>
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <%= form.label :venue_id, "Venue", class: "form-label fw-semibold" %>
             <%= form.collection_select :venue_id, @venues, :id, :name, { prompt: "Select a venue" }, { class: "form-select", required: true } %>
         </div>
