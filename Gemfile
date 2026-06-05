@@ -18,6 +18,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Fix Rails console on Windows with Ruby 4.0
 gem "fiddle"
+# Authentication with Devise for user sign up, login, logout, password recovery, and account editing
+gem "devise"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
