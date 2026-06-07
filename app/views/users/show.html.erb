@@ -53,7 +53,11 @@
                         <% @user.organized_events.each do |event| %>
                             <tr>
                                 <td>
-                                    <%= link_to event.title, event_path(event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% if can?(:read, event) %>
+                                        <%= link_to event.title, event_path(event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% else %>
+                                        <span class="fw-semibold perclas-turquoise-text"><%= event.title %></span>
+                                    <% end %>
                                 </td>
                                 <td>
                                     <span class="badge rounded-pill text-bg-light">
@@ -101,7 +105,11 @@
                         <% @user.registrations.each do |registration| %>
                             <tr>
                                 <td>
-                                    <%= link_to registration.event.title, event_path(registration.event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% if can?(:read, registration.event) %>
+                                        <%= link_to registration.event.title, event_path(registration.event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% else %>
+                                        <span class="fw-semibold perclas-turquoise-text"><%= registration.event.title %></span>
+                                    <% end %>
                                 </td>
                                 <td>
                                     <span class="badge rounded-pill text-bg-light">
@@ -147,7 +155,11 @@
                         <% @user.reviews.each do |review| %>
                             <tr>
                                 <td>
-                                    <%= link_to review.event.title, event_path(review.event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% if can?(:read, review.event) %>
+                                        <%= link_to review.event.title, event_path(review.event), class: "fw-semibold text-decoration-none perclas-turquoise-text" %>
+                                    <% else %>
+                                        <span class="fw-semibold perclas-turquoise-text"><%= review.event.title %></span>
+                                    <% end %>
                                 </td>
                                 <td><%= review.rating %> / 5</td>
                                 <td><%= review.comment %></td>
