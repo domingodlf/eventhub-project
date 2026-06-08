@@ -61,3 +61,13 @@
 .perclas-main-content {
   padding-top: 55px;
 }
+
+/* Desktop navbar search width */
+.perclas-navbar-search {
+  max-width: 420px;
+  flex: 0 1 420px;
+}
+
+.perclas-navbar-search .form-control {
+  min-width: 0;
+}

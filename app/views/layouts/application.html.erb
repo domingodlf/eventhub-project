@@ -31,19 +31,21 @@
     <%= render "layouts/navbar" %>
 
     <main class="perclas-main-content">
-      <div class="container-fluid px-4 px-lg-5 mt-5">
-        <% if notice.present? %>
-          <div class="alert alert-success rounded-4 mb-4">
-            <%= notice %>
-          </div>
-        <% end %>
+      <% if notice.present? || alert.present? %>
+        <div class="container-fluid px-4 px-lg-5 mt-5">
+          <% if notice.present? %>
+            <div class="alert alert-success rounded-4 mb-4">
+              <%= notice %>
+            </div>
+          <% end %>
 
-        <% if alert.present? %>
-          <div class="alert alert-danger rounded-4 mb-4">
-            <%= alert %>
-          </div>
-        <% end %>
-      </div>
+          <% if alert.present? %>
+            <div class="alert alert-danger rounded-4 mb-4">
+              <%= alert %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
 
       <%= yield %>
     </main>
