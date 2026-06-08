@@ -18,6 +18,15 @@ Venue.destroy_all
 Category.destroy_all
 User.destroy_all
 
+### RESET ID SEQUENCES
+
+ActiveRecord::Base.connection.reset_pk_sequence!("users")
+ActiveRecord::Base.connection.reset_pk_sequence!("categories")
+ActiveRecord::Base.connection.reset_pk_sequence!("venues")
+ActiveRecord::Base.connection.reset_pk_sequence!("events")
+ActiveRecord::Base.connection.reset_pk_sequence!("registrations")
+ActiveRecord::Base.connection.reset_pk_sequence!("reviews")
+
 
 ### USERS
 
