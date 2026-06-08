@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       patch :cancel
     end
   end
-  resources :reviews, only: [:index, :show, :create]
+  resources :reviews, only: [:index, :show, :create, :destroy]
 
   root "home#index"
 

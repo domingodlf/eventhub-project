@@ -11,6 +11,16 @@ class ReviewsController < ApplicationController
     authorize! :read, @review
   end
 
+  def destroy
+    @review = Review.find(params[:id])
+    authorize! :destroy, @review
+
+    event = @review.event
+    @review.destroy
+
+    redirect_to event, notice: "Review was successfully deleted."
+  end
+
   def create
     @event = Event.find(review_params[:event_id])
 
