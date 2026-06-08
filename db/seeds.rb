@@ -21,10 +21,14 @@ User.destroy_all
 
 ### USERS
 
+default_password = "password123"
+
 user1 = User.create!(
-  first_name: "Sofia",
-  last_name: "Martinez",
-  email: "sofia.martinez@eventhub.cl",
+  first_name: "Gustabo",
+  last_name: "Garcia",
+  email: "admin@eventhub.com",
+  password: default_password,
+  password_confirmation: default_password,
   role: "admin"
 )
 
@@ -32,6 +36,8 @@ user2 = User.create!(
   first_name: "Lucas",
   last_name: "Fernandez",
   email: "lucas.fernandez@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
@@ -39,6 +45,8 @@ user3 = User.create!(
   first_name: "Valentina",
   last_name: "Rojas",
   email: "valentina.rojas@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
@@ -46,6 +54,8 @@ user4 = User.create!(
   first_name: "Tomas",
   last_name: "Silva",
   email: "tomas.silva@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
@@ -53,6 +63,8 @@ user5 = User.create!(
   first_name: "Camila",
   last_name: "Torres",
   email: "camila.torres@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
@@ -60,6 +72,8 @@ user6 = User.create!(
   first_name: "Diego",
   last_name: "Herrera",
   email: "diego.herrera@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
@@ -67,6 +81,8 @@ user7 = User.create!(
   first_name: "Antonia",
   last_name: "Vargas",
   email: "antonia.vargas@eventhub.cl",
+  password: default_password,
+  password_confirmation: default_password,
   role: "regular"
 )
 
